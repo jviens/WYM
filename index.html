@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Event Map</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .map-container {
+      position: relative;
+      width: 100%;
+      max-width: 994px;
+      margin: 0 auto;
+    }
+    .map-image {
+      width: 100%;
+      display: block;
+    }
+    .hotspot {
+      position: absolute;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .popup {
+      position: absolute;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: none;
+      z-index: 10;
+      max-width: 250px;
+    }
+  </style>
+</head>
+<body>
+  <div class="map-container">
+    <img src="https://d2mkojm4rk40ta.cloudfront.net/us-east-1-src/prod/clientUploads/2025-04/07/1/121276/bb5599d3-14ee-4faa-8f26-90e4d3967ccd-bN9aL1.png" alt="Event Map" class="map-image" />
+
+    <!-- Hotspots -->
+    <div class="hotspot" style="top: 30px; left: 30px; width: 120px; height: 60px;" data-info="With our VIP Package, you get priority camping and parking directly next to the start line."></div>
+    <div class="hotspot" style="top: 120px; left: 100px; width: 100px; height: 60px;" data-info="Recover with the sauna and cold plunges, to loosen up tight muscles between laps."></div>
+    <div class="hotspot" style="top: 40px; left: 250px; width: 100px; height: 80px;" data-info="Recover and eat delectable food all weekend out of the sun."></div>
+    <div class="hotspot" style="top: 60px; left: 540px; width: 130px; height: 80px;" data-info="Stay limber and loose with our recovery tent with therapeutic boots, foam rollers, a masseuse, and more!"></div>
+    <div class="hotspot" style="top: 120px; left: 310px; width: 80px; height: 40px;" data-info="The start/end where every lap starts and turns around."></div>
+    <div class="hotspot" style="top: 100px; left: 750px; width: 100px; height: 300px;" data-info="Experience our vendors and sponsors as they provide swag, offer support, and cheer you on."></div>
+    <div class="hotspot" style="top: 280px; left: 420px; width: 160px; height: 100px;" data-info="All team-provided aid and support will live in this section."></div>
+    <div class="hotspot" style="top: 400px; left: 240px; width: 220px; height: 120px;" data-info="Elevate your experience with these glamping yurts! With a real bed, room for gear and privacy, you don't want to miss out on a comfortable festival experience."></div>
+    <div class="hotspot" style="top: 650px; left: 300px; width: 160px; height: 50px;" data-info="Bring your own tent for the weekend!"></div>
+    <div class="hotspot" style="top: 300px; left: 770px; width: 160px; height: 200px;" data-info="Park all your vehicles or camp in an RV, popup camper, or crew area."></div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup"></div>
+  </div>
+
+  <script>
+    const hotspots = document.querySelectorAll('.hotspot');
+    const popup = document.getElementById('popup');
+
+    hotspots.forEach(hotspot => {
+      hotspot.addEventListener('click', () => {
+        const rect = hotspot.getBoundingClientRect();
+        const containerRect = document.querySelector('.map-container').getBoundingClientRect();
+
+        const top = rect.top - containerRect.top - popup.offsetHeight - 10;
+        const left = rect.left - containerRect.left + rect.width / 2 - popup.offsetWidth / 2;
+
+        popup.style.top = `${top}px`;
+        popup.style.left = `${left}px`;
+        popup.style.display = 'block';
+        popup.innerText = hotspot.getAttribute('data-info');
+      });
+    });
+
+    window.addEventListener('click', (e) => {
+      if (!e.target.classList.contains('hotspot')) {
+        popup.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
