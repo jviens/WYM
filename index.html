@@ -61,7 +61,7 @@
     const popup = document.getElementById('popup');
 
     hotspots.forEach(hotspot => {
-      hotspot.addEventListener('click', () => {
+      hotspot.addEventListener('mouseenter', () => {
         const rect = hotspot.getBoundingClientRect();
         const containerRect = document.querySelector('.map-container').getBoundingClientRect();
 
@@ -73,12 +73,10 @@
         popup.style.display = 'block';
         popup.innerText = hotspot.getAttribute('data-info');
       });
-    });
 
-    window.addEventListener('click', (e) => {
-      if (!e.target.classList.contains('hotspot')) {
+      hotspot.addEventListener('mouseleave', () => {
         popup.style.display = 'none';
-      }
+      });
     });
   </script>
 </body>
